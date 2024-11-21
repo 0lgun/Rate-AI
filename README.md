@@ -14,13 +14,23 @@
       - karar veremedim  
       
   ### Analiz Et :
+    
     - Çok sayıda yorumu tek tek puanlamak yerine daha genel bir değerlendirme sunar.
     - Bütün yorumları teker teker analiz ediyor ve ortalamayı yüzdelik değer olarak döndürüyor.
     - Böylece ürüne ait ortalama puana kısa sürede erişilebiliyor.
+    - Veritabanına dosyanın konumu ve analiz sonucu kaydediliyor. 
+    - Böylece analiz edilmiş her dosyaya ait sonuca tek bir sorguyla ulaşılabiliyor.
+  
   ### Puanla : 
+  
     - Model yüklenen her yorum için 1-5 yıldız aralığında puan veriyor.
-    - Puanlanmış yorumlar farklı bir dosyaya kaydediliyor.
+    - Puanlanmış yorumlar seçilen dosyanın olduğu konuma csv olarak kaydediliyor. 
     - Ayrıca uygulamanın kendi arayüzünden de puanlar görüntülenebilir.
+
+  NOT : Hem analiz et hem de puanla kısmındaki kayıt sistemi sayesinde daha önce
+  üzerinde işlem yaptığınız dosyayı tekrar yüklediğiniz anda program sonuçları otomatik
+  olarak görüntüleyebilmenize olanak sağlıyor.
+  
 
 ### VERİ SETİNİN OLUŞTURULMASI :
   - Verileri requests ve bs4 modülleriyle kendim toplamayı denedim. Birçok majör websitesi Response[200] döndürmediği için 'denebunu.com' ve 'beyazperde.com' sitelerinden faydalandım.
@@ -63,7 +73,6 @@
     - Beyazperde yorumlarından oluşturulmuş veri seti için : https://drive.google.com/file/d/1HReNCZL3PUFfmP8t0mL6hyqpk3a9cweg/view?usp=sharing
     - Denebunu yorumlarından oluşturulmuş veri seti için : https://drive.google.com/file/d/1RvBe0V9I6IwbZbZ4eeElV7UuATL5Aork/view?usp=sharing
 
-  *not : İki veri seti de oluşturulduktan sonra rastgele dağılım için kendi içinde karıştırılmıştır.
 ### SÜRÜMLER :
     - Python --> 3.9
     - Tensorflow --> 2.10.0
