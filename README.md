@@ -62,6 +62,7 @@
 ### KAYNAKLAR:
     - Beyazperde yorumlarından oluşturulmuş veri seti için : https://drive.google.com/file/d/1HReNCZL3PUFfmP8t0mL6hyqpk3a9cweg/view?usp=sharing
     - Denebunu yorumlarından oluşturulmuş veri seti için : https://drive.google.com/file/d/1RvBe0V9I6IwbZbZ4eeElV7UuATL5Aork/view?usp=sharing
+    - [GitHub Profilime Git](https://github.com/kullaniciadi)
   *not : İki veri seti de oluşturulduktan sonra rastgele dağılım için kendi içinde karıştırılmıştır.
 ### SÜRÜMLER :
     - Python --> 3.9
