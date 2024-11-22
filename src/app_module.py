@@ -44,11 +44,11 @@ class RoundButton(QPushButton): # özelleştirilmiş buton
 
 # widget özelleştirme
 def customize_widget(widget, text_size = 40, background_color = "transparent",
-                     color = "black",border_color = "black", border = 0, text=""):
+                     color = "black",border_color = "black", border = 0, text="", font = "Segoe Print"):
     widget.adjustSize()
     widget.setStyleSheet(
             get_features(size=text_size, background_color=background_color, color=color,
-                         border=border, border_color=border_color))
+                         border=border, border_color=border_color,font=font))
     widget.setText(text)
 
 # pencerelerde göstermek için dosya ismini sadeleştiriyor.

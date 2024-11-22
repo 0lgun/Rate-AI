@@ -1,13 +1,11 @@
 import os
-
 import numpy as np
-
 import tkinter as tk
+from tkinter import filedialog
 
 from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtGui import QIcon,QPixmap
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QCheckBox, QMessageBox, QLabel
-from tkinter import filedialog
 
 from src.show_rated_comments import ShowRatings
 from src.app_module import get_features, icon_folder, set_checkbox_icon, RoundButton, get_file_name, customize_widget, \
@@ -32,7 +30,7 @@ class MainMenu(QWidget): # kullanıcının ilk karşılaştığı pencere
         analysis = Analysis(rating,path,is_exists) # pencere açılıyor.
         analysis.exec_()
 
-    def create_table(self):
+    def create_table(self): # güncel pencere bilgisi ve analiz skoru için tablo yoksa oluştur.
         cursor.execute("CREATE TABLE IF NOT EXISTS Analysis (path TEXT UNIQUE, score INT)")
         conn.commit()
 
@@ -154,8 +152,8 @@ class MainMenu(QWidget): # kullanıcının ilk karşılaştığı pencere
         return check_box
 
     def init_ui(self):
-        x,y = 500,375
-        button_size = 100
+        x,y = 500,375 # pencere boyutu
+        button_size = 100 # buton ikonu boyutu
 
         background = QLabel(self)
         background.setPixmap(QPixmap(icon_folder + "main_background.jpg")) # arka plan
@@ -195,7 +193,7 @@ class MainMenu(QWidget): # kullanıcının ilk karşılaştığı pencere
         v_box.addLayout(test_layer)
 
         self.setLayout(v_box)
-        self.setWindowTitle("DUYGU ANALİZİ")
+        self.setWindowTitle("RATE AI")
         self.setFixedSize(x,y-50)
         self.setWindowIcon(QIcon(icon_folder + "analysis_icon.png"))
         self.show()

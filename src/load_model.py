@@ -18,13 +18,12 @@ class LoadModel:  # modeli yükleyen sınıf
     def get_accuracy(self):  # model doğruluğu
         result = self.model.evaluate(data_test_pad, target_test)
 
-    def convert_ratings(self,ratings,comment_list):  # 0 - 1 arasındaki ratingleri
+    def convert_ratings(self,ratings):  # 0 - 1 arasındaki ratingleri
         rating_list = list()
         for i,rating in enumerate(ratings):
             rating = rating[0] # liste halinde döndüğü için
             stars = 1 + round(rating / 0.25)  # 1-5 arasında dönüştür.
             rating_list.append(stars)  # cümlelerin sonuna yaz.
-            comment_list[i] = comment_list[i][:-1]
         return rating_list
 
     def rate_the_comments(self):
@@ -36,7 +35,7 @@ class LoadModel:  # modeli yükleyen sınıf
 
         ratings = self.model.predict(tokens_pad)  # tüm yorumlar için 0-1 arası ratingler
 
-        ratings = self.convert_ratings(ratings,comment_list)  # puanları 1-5 skalasında normalize et.
+        ratings = self.convert_ratings(ratings)  # puanları 1-5 skalasında normalize et.
 
         data = {"comment": comment_list, "rating": ratings}
 
@@ -67,7 +66,8 @@ class LoadModel:  # modeli yükleyen sınıf
         with open(self.comments_path, "r", encoding="utf-8") as file:
             content = file.readlines()
         for line in content:
-            comment_list.append(line.strip("\n"))
+            comment = line.strip("\n")
+            comment_list.append(comment)
 
         return comment_list  # yorumları döndür.
 

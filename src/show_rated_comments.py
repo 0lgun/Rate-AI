@@ -1,16 +1,18 @@
+import os
 import pandas as pd
 
 from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtWidgets import QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QCheckBox, QDialog, QApplication
+from PyQt5.QtWidgets import QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QCheckBox, QDialog, QApplication, QMessageBox
 
-from src.app_module import icon_folder, get_features, set_checkbox_icon, resources_folder, cursor, conn
+from src.app_module import icon_folder, get_features, set_checkbox_icon, resources_folder, cursor, conn, \
+    customize_widget
 
 
 # gerekli modüller import ediliyor.
 
 
-class ShowRatings(QDialog): # ratinglerle birlikte gösteren pencere
+class ShowRatings(QDialog): # puanlanmış yorumları gösteren pencere
     def __init__(self,rated_path,file_name="chat_comments_rated"):
         super().__init__()
         self.setWindowFlags(self.windowFlags() & ~Qt.WindowContextHelpButtonHint)
@@ -122,9 +124,19 @@ class ShowRatings(QDialog): # ratinglerle birlikte gösteren pencere
 
         while comment_counter < len(self.comment_list): # tüm listeyi tara.
             content_label = QLabel(self)
+            comment = str(self.comment_list[comment_counter])
+
+
+            max_len = 101
+
+            if len(comment) > max_len:
+                content_label.setToolTip(comment[max_len-3:])
+                comment = comment[:max_len-3] + "..."
+
+
             self.customize_widget(widget=content_label,
                                   text=str(comment_counter + start_index +  1) + ". " + str(
-                                      self.comment_list[comment_counter]), font_size = self.font_size)
+                                      comment), font_size = self.font_size)
 
             rate_layout = QHBoxLayout()
             rate_layout.addStretch()
