@@ -1,6 +1,10 @@
 # Rate-AI
 ### PROJENİN AMAÇLARI :
   - Proje, ürünlere ait yorumların yapay zeka desteği ile daha yüksek doğrulukta puanlanmasını amaçlar. Çoğu üründe -örneklerde görüleceği üzere- kullanıcıların verdikleri puan ve yaptıkları yorumlar uyuşmuyor. Proje bu sorunu çözmeye odaklanıyor.
+<p>&nbsp;</p>
+
+    
+![Bu bir fotoğraf](screenshots/cropped.jpg)
 
 ### UYGULAMANIN SUNDUĞU SEÇENEKLER:
   - Dosyaların yüklenip işlemler yapılması ve kullanıcın doğruluğu test etmesi aşamalarından oluşmaktadır.
