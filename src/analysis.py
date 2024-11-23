@@ -76,7 +76,7 @@ class Analysis(QDialog): # Yüzde olarak memnuniyet oranını gösteren sınıf
     def get_emotion(self): # ratinge göre duygu durunu döndüren fonksiyon
         if self.rating >= 75:
             emotion =  "very_happy" # icon ismi
-            self.color = "green" # duyguya göre özelleştirilmiş bar rengi
+            self.color = "#93C572" # fıstık yeşili
 
         elif self.rating > 60: # rating
             emotion = "happy"
@@ -97,7 +97,7 @@ class Analysis(QDialog): # Yüzde olarak memnuniyet oranını gösteren sınıf
         return emotion # icon ismi döndürülüyor.
 
     def init_ui(self):
-        x,y = 375,250
+        x,y = 437,250
         right_side = QVBoxLayout() # ekranın sağı
         left_side = QVBoxLayout() # ekranın solu
 
@@ -113,23 +113,16 @@ class Analysis(QDialog): # Yüzde olarak memnuniyet oranını gösteren sınıf
         progress_bar.setFixedWidth(x//2)
         progress_bar.setStyleSheet(f"QProgressBar::chunk {{ background-color: {self.color}; }}")
 
-        recognition_item = QLabel(self) # büyüteç ve duygu iconu
-        recognition_item.setPixmap(QPixmap(icon_folder+"emotion-recognition.png"))
-
         emotion_label = QLabel(self) # ilgili duyguyu gösteren icon
         emotion_label.setPixmap(QPixmap(icon_folder+emotion+".png"))
 
         progress_label = QLabel(self) # yüzdeyi sayı cinsinden ifade eden label
-        customize_widget(widget = progress_label, text = f"%{self.rating}", text_size = 35, color = self.color)
+        customize_widget(widget = progress_label, text = f"%{self.rating}", text_size = 35, color = "white")
 
         rate_layout = QHBoxLayout()  # widget yerleştirmek için yatay layout
 
-        rate_layout.addWidget(recognition_item) # yerleştirme işlemleri
-        rate_layout.addWidget(progress_label)
-        rate_layout.addStretch()
-
         left_side.addWidget(progress_bar)
-        left_side.addLayout(rate_layout)
+        left_side.addWidget(progress_label,alignment=Qt.AlignCenter) # 1600-1200
 
         emotion_layout = QHBoxLayout()
 
@@ -152,9 +145,9 @@ class Analysis(QDialog): # Yüzde olarak memnuniyet oranını gösteren sınıf
         self.setWindowIcon(QIcon(icon_folder + "analysis_icon.png")) # pencere ikonu
         self.setFixedSize(x,y) # sabit pencere boyutu
 
-app = QApplication(sys.argv)
-an = Analysis(rating=0.42857142857142855,
-              path="C:/Users/Olgun/Desktop/Rate AI/screenshots/ÖZELLİK GÖSTER/result.txt",
+
+"""app = QApplication(sys.argv)
+an = Analysis(rating=0.75857142857142855,
+              path="/screenshots/ÖZELLİK GÖSTER/result.txt",
               is_exists=True)
-an.exec_()
-sys.exit(app.exec_())
+an.exec_()"""

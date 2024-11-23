@@ -58,8 +58,7 @@ class MainMenu(QWidget): # kullanıcının ilk karşılaştığı pencere
             rated_path = path[:-4] + "_rated.csv"
 
             def open_show_ratings(rated_path):
-                file_name = get_file_name(rated_path)  # pencere için dosya ismi
-                show_ratings = ShowRatings(rated_path, file_name)  # ratingleri gösteren pencere
+                show_ratings = ShowRatings(rated_path)  # ratingleri gösteren pencere
                 show_ratings.exec_()
 
             def load_model():
@@ -152,7 +151,7 @@ class MainMenu(QWidget): # kullanıcının ilk karşılaştığı pencere
         return check_box
 
     def init_ui(self):
-        x,y = 500,375 # pencere boyutu
+        x,y = 650,400 # pencere boyutu
         button_size = 100 # buton ikonu boyutu
 
         background = QLabel(self)
@@ -172,28 +171,30 @@ class MainMenu(QWidget): # kullanıcının ilk karşılaştığı pencere
         self.rating_button = self.create_check_box(icon_name="dont_rate_button")
         # default olarak siyah beyaz iconlar veriliyor. --> işaretlenmemiş.
 
-        check_box_layer = QHBoxLayout()
+        check_box_layout = QHBoxLayout()
 
-        check_box_layer.addSpacing(100)
-        check_box_layer.addWidget(self.analysis_button)
-        check_box_layer.addSpacing(100)
-        check_box_layer.addWidget(self.rating_button)
-        check_box_layer.addSpacing(100) # yerleştirme işlemleri
+        check_box_layout.addStretch()
+        check_box_layout.addWidget(self.analysis_button)
+        check_box_layout.addStretch()
+        check_box_layout.addWidget(self.rating_button)
+        check_box_layout.addStretch() # yerleştirme işlemleri
 
         test_me_button = RoundButton(text="BENİ TEST ET!") # test butonu
         test_me_button.clicked.connect(self.test_model)
 
-        test_layer = QHBoxLayout()
-        test_layer.addWidget(test_me_button, alignment=Qt.AlignCenter)
+        test_layout = QHBoxLayout()
+        test_layout.addWidget(test_me_button, alignment=Qt.AlignCenter)
 
         v_box = QVBoxLayout()
 
         v_box.addWidget(open_button)
-        v_box.addLayout(check_box_layer)
-        v_box.addLayout(test_layer)
+        v_box.addStretch()
+        v_box.addLayout(check_box_layout)
+        v_box.addStretch()
+        v_box.addLayout(test_layout)
 
         self.setLayout(v_box)
         self.setWindowTitle("RATE AI")
-        self.setFixedSize(x,y-50)
+        self.setFixedSize(x,y)
         self.setWindowIcon(QIcon(icon_folder + "analysis_icon.png"))
         self.show()

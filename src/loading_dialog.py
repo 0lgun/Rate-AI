@@ -40,7 +40,7 @@ class LoadingDialog(QDialog): # yükleniyor penceresi
         self.initUI()
 
     def initUI(self):
-        x,y = 500,375
+        x,y = 500,333
         self.setWindowTitle('Model Yükleme')
         
         self.label = QLabel("Yükleniyor {}".format(self.num_dark*"."), self)

@@ -51,21 +51,20 @@ class TestWindow(QWidget):
             self.timer.start(250) # kullanıcının yeniden yorumlandığını anlayabileceği kadar süre bekle
 
     def init_ui(self):
-        x,y = 1000,650 # pencere boyutu
+        x,y = 1000,667 # pencere boyutu
 
         background = QLabel(self)
         background.setPixmap(QPixmap(icon_folder+"model_test_background.jpg")) # arka plan
         background.adjustSize()
 
-        self.setGeometry(400, 200, x,y) # pencere konumu
 
         text_area = QTextEdit(self)
-        customize_widget(widget=text_area,text=self.default_text,color="white")
-        text_area.setFixedSize(x//1.75,y//1.5)
+        customize_widget(widget=text_area,text=self.default_text,color="white",text_size=25)
+        text_area.setFixedSize(x//1.05,y//2.6)
         text_area.moveCursor(QTextCursor.End)
 
         area_layout = QHBoxLayout()
-        area_layout.addWidget(text_area, alignment=Qt.AlignRight)
+        area_layout.addWidget(text_area, alignment=Qt.AlignCenter)
 
         result_label = QLabel(self)
         customize_widget(widget=result_label, text="SONUÇ : ", color="white",text_size=28)
@@ -86,10 +85,12 @@ class TestWindow(QWidget):
 
         v_box = QVBoxLayout()
 
+        v_box.addSpacing(120)
         v_box.addLayout(area_layout)
         v_box.addStretch()
-        v_box.addLayout(button_layout)
         v_box.addLayout(result_layout)
+        v_box.addLayout(button_layout)
+        v_box.addSpacing(100)
 
         self.setLayout(v_box)
         self.setFixedSize(x,y)

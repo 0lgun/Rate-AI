@@ -26,18 +26,22 @@ def set_checkbox_icon(checkbox,path,x=100,y=100): # check_box icon için fonksiy
     ''')
 
 class RoundButton(QPushButton): # özelleştirilmiş buton
-    def __init__(self,x=100,y=60,text="Go"):
+    def __init__(self,x=250,y=60,text="Go"):
         super().__init__()
+        #border-radius: {y//2}px;
         self.setFixedSize(x,y)
         self.setText(text)
         self.setStyleSheet(f"""
     QPushButton {{
-        border-radius: {y//2}px;
         background-color: grey;
-        color: white;
+        color: black;
+        font-family: {"Kantumruy"};
+        font-size: {30}px;
+        
     }}
     QPushButton:hover {{
         background-color: #45a049;
+        color : white;
     }}
 """)
 

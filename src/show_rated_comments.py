@@ -1,46 +1,39 @@
-import os
 import pandas as pd
 
 from PyQt5.QtCore import QSize, Qt
 from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtWidgets import QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QCheckBox, QDialog, QApplication, QMessageBox
+from PyQt5.QtWidgets import QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QDialog
 
-from src.app_module import icon_folder, get_features, set_checkbox_icon, resources_folder, cursor, conn, \
-    customize_widget
-
+from src.app_module import icon_folder, get_features, cursor, conn
 
 # gerekli modüller import ediliyor.
 
 
 class ShowRatings(QDialog): # puanlanmış yorumları gösteren pencere
-    def __init__(self,rated_path,file_name="chat_comments_rated"):
+    def __init__(self,rated_path):
         super().__init__()
         self.setWindowFlags(self.windowFlags() & ~Qt.WindowContextHelpButtonHint)
 
-        self.file_name = file_name
-
         self.path = rated_path
-        self.page_path = resources_folder + "current_page"
-
         self.num_showing_comment = 9 # bir sayfada gösterilecek yorum sayısı
+        self.font_size = 90 // self.num_showing_comment + 10 
+        # yazı boyutu da sayfadaki yorum sayısına göre ayarlanıyor.
 
-        self.font_size = 90 // self.num_showing_comment + 15
+        self.current_window_index, self.num_comment = int(), int() # bulunulan sayfa ve toplam yorum sayısı
 
-        self.current_window_index,self.num_comment = int(),int() # bulunulan sayfa ve toplam yorum sayısı
+        self.layout = QVBoxLayout()
 
-        self.v_box = QVBoxLayout()
-
-        self.comment_list,self.rating_list = list(),list() # yorum-rating listeleri
+        self.comment_list, self.rating_list = list(), list() # yorum-rating listeleri
 
         self.get_active_window_index() # son bakılan pencrenin indeksini getir.
 
         self.init_ui()
 
 
-    def create_new_rate_box(self):
-        check_box = QLabel(self)
-        check_box.setStyleSheet(get_features(background_color="transparent"))
-        return check_box
+    def create_new_star(self):
+        star = QLabel(self)
+        star.setStyleSheet(get_features(background_color="transparent"))
+        return star
 
     def is_file_exists(self): # dosya ismi veritabanında kayıtlı mı?
         cursor.execute("SELECT * FROM CurrentPages WHERE path = ?", (self.path,))
@@ -57,7 +50,7 @@ class ShowRatings(QDialog): # puanlanmış yorumları gösteren pencere
         else: # tam bölünmüyorsa
             return int(self.num_comment // self.num_showing_comment) + 1
 
-    def get_active_window_index(self):
+    def get_active_window_index(self): # kullanıcın en son hangi  sayfada kaldığı bilgisi
         try:
             cursor.execute("SELECT currentPage FROM CurrentPages WHERE path=?", (self.path,))
 
@@ -77,7 +70,7 @@ class ShowRatings(QDialog): # puanlanmış yorumları gösteren pencere
 
     def restart(self): # pencereyi yeniden başlat
         self.close()
-        show_ratings = ShowRatings(self.path,self.file_name)
+        show_ratings = ShowRatings(self.path)
         show_ratings.exec_()
 
     def change_window(self): # sayfayı değiştir
@@ -86,9 +79,11 @@ class ShowRatings(QDialog): # puanlanmış yorumları gösteren pencere
         if button.objectName() == "prev" and self.current_window_index > 1: # önceki sayfaya git
             self.current_window_index -= 1 
             is_changed = True
+
         elif button.objectName() == "next" and self.current_window_index < self.find_the_last_page():
             self.current_window_index += 1 # sonraki sayfaya git
             is_changed = True
+
         if is_changed: # ilk sayfada geri ve son sayfada ileriye basılma durumlarında yenileme yapma.
             self.save_current_page()
             self.restart()
@@ -111,84 +106,98 @@ class ShowRatings(QDialog): # puanlanmış yorumları gösteren pencere
             comment = comments[i]
 
             if  end_index > i >= start_index and not comment in self.comment_list: # tekrarlama durumu
-                self.comment_list.append(comment)
+                self.comment_list.append(str(comment))
                 self.rating_list.append(ratings[i]) # sadece ratingi al.
         
-        return (start_index,end_index)
+        return start_index
 
 
     def show_the_comments(self):
-        comment_counter,rate_counter = 0,0
-        index_list = self.get_range()
-        start_index, end_index = index_list[0], index_list[1] # başlangıç, bitiş indeksleri ör: 36,48
+        counter = 0
+        space_size = 50
 
-        while comment_counter < len(self.comment_list): # tüm listeyi tara.
+        start_index = self.get_range() # başlangıç, bitiş indeksleri ör: 36,48
+
+        self.layout.addSpacing(space_size)
+
+        while counter < len(self.comment_list): # tüm listeyi tara.
             content_label = QLabel(self)
-            comment = str(self.comment_list[comment_counter])
+
+            comment = self.comment_list[counter] # yorum
+            rating = self.rating_list[counter] # rating
 
 
-            max_len = 101
+            max_len = 119 # 119 karakterden uzun yorumların sonuna 3 nokta konulacak.
 
             if len(comment) > max_len:
-                content_label.setToolTip(comment[max_len-3:])
+                content_label.setToolTip(comment[max_len-3:]) # yorumun üstüne gelindiğinde devamı okunabilecek.
                 comment = comment[:max_len-3] + "..."
 
 
-            self.customize_widget(widget=content_label,
-                                  text=str(comment_counter + start_index +  1) + ". " + str(
-                                      comment), font_size = self.font_size)
+            sequence_number = counter + start_index +  1 # yorumun sırası
+            self.customize_widget(widget = content_label, text = f"{sequence_number}. {comment}",
+                                  font_size = self.font_size) # özelleştiriliyor.
 
-            rate_layout = QHBoxLayout()
+            rate_layout = QHBoxLayout() # yıldızları tutacak layout
             rate_layout.addStretch()
 
-            for box in range(5): # rating için yıldızlar yerleştiriliyor.
-                rate_box = self.create_new_rate_box()
-                is_rated = "unrated.png"
+            for rate_counter in range(5): # rating için yıldızlar yerleştiriliyor.
+                star = self.create_new_star()
+                is_rated = "unrated.png" # default olarak boş yıldız
 
-                if self.rating_list[comment_counter] > rate_counter:
-                    is_rated = "rated.png"
+                if rating > rate_counter: # eğer ürünün puanı sayıdan büyükse
+                    is_rated = "rated.png" # yıldızı boya
 
-                rate_box.setPixmap(QPixmap(icon_folder+is_rated))
+                star.setPixmap(QPixmap(icon_folder + is_rated))
 
-                rate_layout.addWidget(rate_box)
-                rate_counter += 1
-
-            rate_counter = 0  # yeni liste için rate sayacı sıfırlanıyor.
+                rate_layout.addWidget(star)
 
             h_box = QHBoxLayout()
+
+            h_box.addSpacing(space_size)
             h_box.addWidget(content_label)
-            h_box.addStretch()
-
             h_box.addLayout(rate_layout)
+            h_box.addSpacing(space_size)
 
-            self.v_box.addLayout(h_box)
-            comment_counter += 1
-        self.v_box.addStretch()
+            self.layout.addLayout(h_box)
+            self.layout.addStretch()
+
+            counter += 1
+
+        self.layout.addStretch()
         self.create_navigation_items()
     
     def create_navigation_items(self):
         next_button = QPushButton(self)
         next_button.setObjectName("next")
+        
         prev_button = QPushButton(self)
         prev_button.setObjectName("prev")
 
-        self.page_label = QLabel(self)
-        self.page_label.setAlignment(Qt.AlignCenter)
-        self.page_label.setText(str(self.current_window_index) + "/" + str(self.find_the_last_page()))
-        self.page_label.setStyleSheet(get_features(size=self.font_size, color="white",font="Comic sans MS"))
+        page_state = f"{self.current_window_index}/{self.find_the_last_page()}" # bulunulan/toplam
 
-        navigation_widgets = [prev_button, self.page_label, next_button]
+        page_label = QLabel(page_state,self)
+        page_label.setStyleSheet(get_features(size=self.font_size, color="white",font="Comic sans MS"))
+
+        navigation_widgets = [prev_button, page_label, next_button]
+
         navigation_layout = QHBoxLayout()
         navigation_layout.addStretch()
+
         for widget in navigation_widgets:
-            if widget.objectName() == "prev" or widget.objectName() == "next":
+
+            if widget.objectName() == "prev" or widget.objectName() == "next": # ileri-geri butonları için
                 widget.setIcon(QIcon(icon_folder + widget.objectName() + ".png"))
                 widget.setIconSize(QSize(50, 50))
                 widget.clicked.connect(self.change_window)
-            navigation_layout.addWidget(widget)
+                widget.setStyleSheet('background: transparent; border: none;')
+                
+            navigation_layout.addWidget(widget) # hepsini yerleştir.
+
         navigation_layout.addStretch()
-        self.v_box.addStretch()
-        self.v_box.addLayout(navigation_layout)
+
+        self.layout.addStretch()
+        self.layout.addLayout(navigation_layout)
 
     def customize_widget(self, widget, font_size = 25, background_color = "transparent",
                          color = "white", border_color = "white", border = 0, text=""):
@@ -202,13 +211,15 @@ class ShowRatings(QDialog): # puanlanmış yorumları gösteren pencere
         widget.setText(text)
 
     def init_ui(self):
+        x,y = 1600,850
+
         window_background = QLabel(self)
         window_background.setPixmap(QPixmap(icon_folder + "show_rating_background.jpg"))
         window_background.adjustSize()
 
         self.show_the_comments()
 
-        self.setLayout(self.v_box)
-
+        self.setLayout(self.layout)
+        self.setFixedSize(x,y)
         self.setWindowTitle("PUANLANAN YORUMLAR")
         self.setWindowIcon(QIcon(icon_folder + "comment_icon.png"))
