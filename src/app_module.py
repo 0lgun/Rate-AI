@@ -12,7 +12,7 @@ conn = sqlite3.connect(resources_folder+"database.db") # bağlantı kur.
 cursor = conn.cursor()
 
 # style sheet fonksiyonu
-get_features = lambda font="Segoe Print", size=17, color="black",background_color="transparent",\
+get_features = lambda font="Kantumruy", size=17, color="black",background_color="transparent",\
                       border=0,border_color="black":("font-family: {}; font-size: {}px; color: {};background-color: {};border: {}px solid {};"
      .format(font, size, color, background_color,border,border_color))
 
@@ -44,7 +44,7 @@ class RoundButton(QPushButton): # özelleştirilmiş buton
 
 # widget özelleştirme
 def customize_widget(widget, text_size = 40, background_color = "transparent",
-                     color = "black",border_color = "black", border = 0, text="", font = "Segoe Print"):
+                     color = "black",border_color = "black", border = 0, text="", font = "Kantumruy"):
     widget.adjustSize()
     widget.setStyleSheet(
             get_features(size=text_size, background_color=background_color, color=color,

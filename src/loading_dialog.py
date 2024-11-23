@@ -1,7 +1,7 @@
 from functools import partial
 
 from PyQt5.QtGui import QPixmap, QIcon
-from PyQt5.QtWidgets import  QVBoxLayout, QLabel, QDialog, QHBoxLayout
+from PyQt5.QtWidgets import QVBoxLayout, QLabel, QDialog, QHBoxLayout, QProgressBar
 from PyQt5.QtCore import QThread, pyqtSignal, Qt, QTimer
 
 from src.app_module import icon_folder, customize_widget
@@ -25,8 +25,13 @@ class LoadingDialog(QDialog): # yükleniyor penceresi
         self.success = False # yükleme tamamlandı mı?
         self.setWindowFlags(self.windowFlags() & ~Qt.WindowContextHelpButtonHint)
 
-        self.level_counter = 2
         self.num_dark = 1
+
+        self.color = "#2F2F2F" # koyu gri
+
+        self.estimatedCompletionTime = 14000 # yaklaşık tamamlanma süresi
+
+        self.value = 0
 
         self.path = path
 
@@ -35,36 +40,50 @@ class LoadingDialog(QDialog): # yükleniyor penceresi
         self.initUI()
 
     def initUI(self):
-        x,y = 512,512
+        x,y = 500,375
         self.setWindowTitle('Model Yükleme')
-        self.setGeometry(300,100, x,y)
-
-        self.background = QLabel(self)
-        self.background.setPixmap(QPixmap(icon_folder+f"level{self.level_counter}_loading.png"))
-        self.background.setFixedSize(x,y)
-
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(partial(self.update_background,self.success))
-        self.timer.start(1000)  # 1000 ms = 1 saniye
-
-        v_box = QVBoxLayout()
-        
-        label_layout = QHBoxLayout()
         
         self.label = QLabel("Yükleniyor {}".format(self.num_dark*"."), self)
-        customize_widget(widget=self.label)
-        
-        label_layout.addStretch()
-        label_layout.addWidget(self.label)
-        label_layout.addStretch()
+        customize_widget(widget=self.label,color="white")
 
-        v_box.addLayout(label_layout)
+        self.progress_label = QLabel(self)
+        customize_widget(widget=self.progress_label,color="white",text=f"%0")
+
+        progress_layout = QHBoxLayout()
+        progress_layout.addWidget(self.progress_label,alignment=Qt.AlignRight)
+        progress_layout.addSpacing(x//5)
+
+        self.progress_bar = QProgressBar(self)
+        self.progress_bar.setFixedSize(x//1.5,y//25)
+        self.progress_bar.setTextVisible(False)
+        self.progress_bar.setMaximum(self.estimatedCompletionTime)
+        self.progress_bar.setStyleSheet(f"""
+            QProgressBar {{
+                background-color: {self.color};
+                border: 2px solid {self.color};
+            }}
+            QProgressBar::chunk {{
+                background-color: white;
+            }}
+        """)
+
+        layout = QVBoxLayout()
+        layout.addStretch()
+        layout.addWidget(self.label,alignment=Qt.AlignCenter)
+        layout.addWidget(self.progress_bar,alignment=Qt.AlignCenter)
+        layout.addLayout(progress_layout)
+        layout.addStretch()
+
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(partial(self.update_progress_bar, self.success))
+        self.timer.start(500)  # 1000 ms = 1 saniye
 
         self.start_loading(self.path)
 
-        self.setLayout(v_box)
+        self.setLayout(layout)
         self.setFixedSize(x,y)
 
+        self.setStyleSheet("background-color: black;")
         self.setWindowIcon(QIcon(icon_folder+"loading_icon.png"))
         self.setWindowTitle("Model Yükleniyor...")
 
@@ -76,25 +95,40 @@ class LoadingDialog(QDialog): # yükleniyor penceresi
 
     def get_model(self, model):
         self.model = model
-        self.background.setPixmap(QPixmap(icon_folder+f"level{self.level_counter}_loading.png"))
         self.label.setText("Yükleme \nbaşarıyla\ntamamlandı.")
+        self.timer.stop()
+        self.progress_label.setText("%100")
+        self.progress_bar.setValue(self.estimatedCompletionTime)
         QTimer.singleShot(1000,self.close)
         self.success = True
 
-    def update_background(self,success):
+    def update_progress_bar(self,success):
         try:
             if not success:
-                self.level_counter += 1
-                path = icon_folder+f"level{self.level_counter}_loading.png"
                 self.label.setText("Yükleniyor {}".format(self.num_dark * "."))
-                self.background.setPixmap(QPixmap(path))
 
                 self.num_dark += 1
+
+                if self.value == self.estimatedCompletionTime:
+                    self.value = int(self.estimatedCompletionTime * .99)
+
+                self.progress_bar.setValue(self.value)
+
+                rate = (self.value/self.estimatedCompletionTime)*100
+                rate = round(rate)
+
+                if rate == int(rate):
+                    rate = int(rate)
+
+                if rate >= 99:
+                    rate = 99
+
+                self.progress_label.setText(f"%{rate}")
+
                 if self.num_dark == 4:
                     self.num_dark = 1
 
-                if self.level_counter == 12:
-                    self.level_counter = 1
+                self.value += 500
 
         except AttributeError:
             pass
