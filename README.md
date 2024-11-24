@@ -74,7 +74,7 @@
 
 
 ### KAYNAKLAR:
-    - Projeye ait videolar için : https://drive.google.com/drive/folders/1GmojXNA15YhoXZ7ysJKeXapwkATJ0xSp?usp=sharing
+    - Projeye ait daha fazla video için : https://drive.google.com/drive/folders/1GmojXNA15YhoXZ7ysJKeXapwkATJ0xSp?usp=sharing
     - Beyazperde yorumlarından oluşturulmuş veri seti için : https://drive.google.com/file/d/1GpHxgiCukb5Lki76eWk072YjRBoUpXlG/view?usp=sharing
     - Denebunu yorumlarından oluşturulmuş veri seti için : https://drive.google.com/file/d/1k_6Bu4yLYaphWyZCK6ERaXh96bwoBFLz/view?usp=sharing
 
