@@ -4,7 +4,7 @@
 <p>&nbsp;</p>
 
     
-![Bu bir fotoğraf](screenshots/cropped.jpg)
+![MODEL TEST](screenshots/model_test.png)
 
 ### UYGULAMANIN SUNDUĞU SEÇENEKLER:
   - Dosyaların yüklenip işlemler yapılması ve kullanıcın doğruluğu test etmesi aşamalarından oluşmaktadır.
