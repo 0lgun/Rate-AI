@@ -29,7 +29,6 @@ model.compile(loss="binary_crossentropy",optimizer=optimizer,metrics=["accuracy"
 model.fit(x=data_train_pad,y=target_train,epochs = 4, batch_size = 128)
 # data : veriler, target : 0-1 etiketler, epochs -> kaç defa eğitilsin, batch -> paket boyutu
 
-save_model(model,model_path) # 0.9406 --> 5,64 ; 0.9399 --> 4,256 ; 0.9402 --> 4,128
-# w/max_data_size --|-- 0.9412 -> 5 epochs ,64 batch-size
+save_model(model,model_path)
 
 result = model.evaluate(data_test_pad, target_test) # 95.07
