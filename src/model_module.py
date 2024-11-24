@@ -44,7 +44,7 @@ for line in lines:
     target.append(int(line[0])) # ratingler
     data.append(line[2:]) # yorumlar
 
-cutoff = int(len(data) * 0.15) # verilerin %80i eğitim, %20si test için kullanılacak.
+cutoff = int(len(data) * 0.2) # verilerin %80i eğitim, %20si test için kullanılacak.
 
 data_train = data[cutoff:] # yorum eğitim
 target_train = target[cutoff:] # rating eğitim
