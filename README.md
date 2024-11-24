@@ -17,6 +17,7 @@
       - emin değilim ama (olumlu/olumsuz)
       - karar veremedim
 
+<p>&nbsp;</p>
   
   ### Analiz Et :
     
@@ -25,6 +26,8 @@
     - Bu sayede ürüne ait ortalama puana kısa sürede erişilebiliyor.
     - Veritabanına, dosyanın konumu ve analiz sonucu kaydedilir.
     - Böylece analiz edilmiş her dosyaya ait sonuca tek bir sorguyla ulaşılabiliyor.
+
+<p>&nbsp;</p>
   
   ### Puanla : 
   
