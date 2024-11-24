@@ -3,8 +3,9 @@
   - Proje, ürünlere ait yorumların yapay zeka desteği ile daha yüksek doğrulukta puanlanmasını amaçlar.
   - Çoğu üründe kullanıcıların yorumları ve puanları arasında tutarsızlıklar görülmektedir. Proje bu sorunu çözmeye odaklanıyor.
 
-<p>&nbsp;</p>
-
+     <p>&nbsp;</p>
+     <img src="screenshots/main_window.png" width="500" />
+     <p>&nbsp;</p>
 ### UYGULAMANIN SAĞLADIĞI ÖZELLİKLER :
   - Dosyaların yüklenip işlemler yapılması ve kullanıcın doğruluğu test etmesi aşamalarından oluşmaktadır.
     <p>&nbsp;</p>
@@ -31,7 +32,11 @@
     - Veritabanına, dosyanın konumu ve analiz sonucu kaydedilir.
     - Böylece analiz edilmiş her dosyaya ait sonuca tek bir sorguyla ulaşılabiliyor.
 
+
 <p>&nbsp;</p>
+<img src="screenshots/analysis.png" width="400" />
+<p>&nbsp;</p>
+
   
   ### Puanla : 
   
@@ -39,14 +44,14 @@
     - Puanlanmış yorumlar seçilen dosyanın olduğu konuma csv olarak kaydediliyor. 
     - Ayrıca uygulamanın kendi arayüzünden de puanlar görüntülenebilir.
   
+
+  <p>&nbsp;</p>  
+<img src="screenshots/rated_comments.png" width="800" />
   <p>&nbsp;</p> 
   
   NOT: Hem 'Analiz Et' hem de 'Puanla' bölümlerindeki kayıt sistemi sayesinde, daha önce işlem yaptığınız dosyayı tekrar yüklediğinizde program sonuçları otomatik olarak görüntüler.
 
-***
-  <p>&nbsp;</p>  
-<img src="screenshots/rated_comments.png" width="800" />
-  <p>&nbsp;</p> 
+<p>&nbsp;</p>
 
 ### VERİ SETİNİN HAZIRLANMASI :
   - Verileri requests ve bs4 modülleriyle kendim toplamayı denedim. Birçok majör websitesi Response[200] döndürmediği için 'denebunu.com' ve 'beyazperde.com' sitelerinden faydalandım.
