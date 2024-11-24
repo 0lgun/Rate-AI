@@ -74,8 +74,9 @@
 
 
 ### KAYNAKLAR:
-    - Beyazperde yorumlarından oluşturulmuş veri seti için : https://drive.google.com/file/d/1HReNCZL3PUFfmP8t0mL6hyqpk3a9cweg/view?usp=sharing
-    - Denebunu yorumlarından oluşturulmuş veri seti için : https://drive.google.com/file/d/1RvBe0V9I6IwbZbZ4eeElV7UuATL5Aork/view?usp=sharing
+    - Projeye ait videolar için : https://drive.google.com/drive/folders/1GmojXNA15YhoXZ7ysJKeXapwkATJ0xSp?usp=sharing
+    - Beyazperde yorumlarından oluşturulmuş veri seti için : https://drive.google.com/file/d/1GpHxgiCukb5Lki76eWk072YjRBoUpXlG/view?usp=sharing
+    - Denebunu yorumlarından oluşturulmuş veri seti için : https://drive.google.com/file/d/1k_6Bu4yLYaphWyZCK6ERaXh96bwoBFLz/view?usp=sharing
 
 ### SÜRÜMLER :
     - Python --> 3.9
