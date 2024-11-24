@@ -65,8 +65,8 @@ class Analysis(QDialog): # Yüzde olarak memnuniyet oranını gösteren sınıf
     def create_delete_button(self):
         delete_button = QPushButton(self)
         delete_button.clicked.connect(self.delete_record)
-        customize_widget(delete_button, text="KAYDI SİL", color="black", border_color="red",
-                         border=2, background_color="red", text_size=20, font="Arial Black")
+        customize_widget(delete_button, text="KAYDI SİL", color="white", border_color="white",
+                         border=2, background_color="transparent", text_size=20)
 
         delete_layout = QHBoxLayout()
         delete_layout.addWidget(delete_button, alignment=Qt.AlignCenter)
@@ -119,8 +119,8 @@ class Analysis(QDialog): # Yüzde olarak memnuniyet oranını gösteren sınıf
         progress_label = QLabel(self) # yüzdeyi sayı cinsinden ifade eden label
         customize_widget(widget = progress_label, text = f"%{self.rating}", text_size = 35, color = "white")
 
-        rate_layout = QHBoxLayout()  # widget yerleştirmek için yatay layout
 
+        left_side.addStretch()
         left_side.addWidget(progress_bar)
         left_side.addWidget(progress_label,alignment=Qt.AlignCenter) # 1600-1200
 
@@ -144,10 +144,3 @@ class Analysis(QDialog): # Yüzde olarak memnuniyet oranını gösteren sınıf
         self.setWindowTitle("analiz <-> ".upper()+self.file_name.upper()) # pencere ismi
         self.setWindowIcon(QIcon(icon_folder + "analysis_icon.png")) # pencere ikonu
         self.setFixedSize(x,y) # sabit pencere boyutu
-
-
-"""app = QApplication(sys.argv)
-an = Analysis(rating=0.75857142857142855,
-              path="/screenshots/ÖZELLİK GÖSTER/result.txt",
-              is_exists=True)
-an.exec_()"""

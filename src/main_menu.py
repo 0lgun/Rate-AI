@@ -194,7 +194,7 @@ class MainMenu(QWidget): # kullanıcının ilk karşılaştığı pencere
         v_box.addLayout(test_layout)
 
         self.setLayout(v_box)
-        self.setWindowTitle("RATE AI")
+        self.setWindowTitle("RATE-AI")
         self.setFixedSize(x,y)
         self.setWindowIcon(QIcon(icon_folder + "analysis_icon.png"))
         self.show()

@@ -36,6 +36,12 @@ class TestWindow(QWidget):
 
     def update_label(self,result_label,text):
         result_label.setText(text)
+    
+
+    def flush_area(self):
+        text_area = self.sender()
+        text_area.blockSignals(True)
+        text_area.setPlainText("")
 
     def test_it(self,result_label,text_area):
         user_comment = text_area.toPlainText()
@@ -57,11 +63,11 @@ class TestWindow(QWidget):
         background.setPixmap(QPixmap(icon_folder+"model_test_background.jpg")) # arka plan
         background.adjustSize()
 
-
         text_area = QTextEdit(self)
         customize_widget(widget=text_area,text=self.default_text,color="white",text_size=25)
         text_area.setFixedSize(x//1.05,y//2.6)
         text_area.moveCursor(QTextCursor.End)
+        text_area.textChanged.connect(self.flush_area)
 
         area_layout = QHBoxLayout()
         area_layout.addWidget(text_area, alignment=Qt.AlignCenter)

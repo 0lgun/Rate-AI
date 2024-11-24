@@ -16,6 +16,7 @@ get_features = lambda font="Kantumruy", size=17, color="black",background_color=
                       border=0,border_color="black":("font-family: {}; font-size: {}px; color: {};background-color: {};border: {}px solid {};"
      .format(font, size, color, background_color,border,border_color))
 
+
 def set_checkbox_icon(checkbox,path,x=100,y=100): # check_box icon için fonksiyon
     checkbox.setStyleSheet(f'''
         QCheckBox::indicator {{
