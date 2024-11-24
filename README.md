@@ -17,8 +17,12 @@
       - emin değilim ama (olumlu/olumsuz)
       - karar veremedim
 
+***
+<p>&nbsp;</p> 
+<img src="screenshots/test_me.png" width="800" />
 <p>&nbsp;</p>
-  
+
+ 
   ### Analiz Et :
     
     - Çok sayıda yorumu tek tek puanlamak yerine daha genel bir değerlendirme sunar.
@@ -38,9 +42,11 @@
   <p>&nbsp;</p> 
   
   NOT: Hem 'Analiz Et' hem de 'Puanla' bölümlerindeki kayıt sistemi sayesinde, daha önce işlem yaptığınız dosyayı tekrar yüklediğinizde program sonuçları otomatik olarak görüntüler.
-  
-  <p>&nbsp;</p>  
 
+***
+  <p>&nbsp;</p>  
+<img src="screenshots/rated_comments.png" width="800" />
+  <p>&nbsp;</p> 
 
 ### VERİ SETİNİN HAZIRLANMASI :
   - Verileri requests ve bs4 modülleriyle kendim toplamayı denedim. Birçok majör websitesi Response[200] döndürmediği için 'denebunu.com' ve 'beyazperde.com' sitelerinden faydalandım.
