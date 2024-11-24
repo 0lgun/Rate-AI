@@ -1,13 +1,13 @@
 # Rate-AI
-### PROJENİN AMAÇLARI :
-  - Proje, ürünlere ait yorumların yapay zeka desteği ile daha yüksek doğrulukta puanlanmasını amaçlar. Çoğu üründe -örneklerde görüleceği üzere- kullanıcıların verdikleri puan ve yaptıkları yorumlar uyuşmuyor. Proje bu sorunu çözmeye odaklanıyor.
+### PROJENİN HEDEFLERİ :
+  - Proje, ürünlere ait yorumların yapay zeka desteği ile daha yüksek doğrulukta puanlanmasını amaçlar.
+  - Çoğu üründe kullanıcıların yorumları ve puanları arasında tutarsızlıklar görülmektedir. Proje bu sorunu çözmeye odaklanıyor.
+
 <p>&nbsp;</p>
 
-    
-![MODEL TEST](screenshots/model_test.png)
-
-### UYGULAMANIN SUNDUĞU SEÇENEKLER:
+### UYGULAMANIN SAĞLADIĞI ÖZELLİKLER :
   - Dosyaların yüklenip işlemler yapılması ve kullanıcın doğruluğu test etmesi aşamalarından oluşmaktadır.
+    <p>&nbsp;</p>
   ### Beni Test Et :
     - Yeni kullanıcıların modelin doğruluğunu test etmesi amacıyla oluşturulmuştur.
     - Sonucunu görmek istediğiniz yorumu yüklediğinizde size 7 farklı değerlendirme sonucundan en uygun olanı döndürüyor.
@@ -15,14 +15,15 @@
       - kesinikle (olumlu/olumsuz)
       - (olumlu/olumsuz)
       - emin değilim ama (olumlu/olumsuz)
-      - karar veremedim  
-      
+      - karar veremedim
+
+  
   ### Analiz Et :
     
     - Çok sayıda yorumu tek tek puanlamak yerine daha genel bir değerlendirme sunar.
-    - Bütün yorumları teker teker analiz ediyor ve ortalamayı yüzdelik değer olarak döndürüyor.
-    - Böylece ürüne ait ortalama puana kısa sürede erişilebiliyor.
-    - Veritabanına dosyanın konumu ve analiz sonucu kaydediliyor. 
+    - Tüm yorumları detaylı bir şekilde analiz eder ve ortalama puanı yüzdelik değer olarak sunar.
+    - Bu sayede ürüne ait ortalama puana kısa sürede erişilebiliyor.
+    - Veritabanına, dosyanın konumu ve analiz sonucu kaydedilir.
     - Böylece analiz edilmiş her dosyaya ait sonuca tek bir sorguyla ulaşılabiliyor.
   
   ### Puanla : 
@@ -30,20 +31,22 @@
     - Model yüklenen her yorum için 1-5 yıldız aralığında puan veriyor.
     - Puanlanmış yorumlar seçilen dosyanın olduğu konuma csv olarak kaydediliyor. 
     - Ayrıca uygulamanın kendi arayüzünden de puanlar görüntülenebilir.
-
-  NOT : Hem analiz et hem de puanla kısmındaki kayıt sistemi sayesinde daha önce
-  üzerinde işlem yaptığınız dosyayı tekrar yüklediğiniz anda program sonuçları otomatik
-  olarak görüntüleyebilmenize olanak sağlıyor.
   
+  <p>&nbsp;</p> 
+  
+  NOT: Hem 'Analiz Et' hem de 'Puanla' bölümlerindeki kayıt sistemi sayesinde, daha önce işlem yaptığınız dosyayı tekrar yüklediğinizde program sonuçları otomatik olarak görüntüler.
+  
+  <p>&nbsp;</p>  
 
-### VERİ SETİNİN OLUŞTURULMASI :
+
+### VERİ SETİNİN HAZIRLANMASI :
   - Verileri requests ve bs4 modülleriyle kendim toplamayı denedim. Birçok majör websitesi Response[200] döndürmediği için 'denebunu.com' ve 'beyazperde.com' sitelerinden faydalandım.
   
   - Bu iki farklı websitesi için 2 farklı algoritma kullanmam gerekti.
 
 
+    <p>&nbsp;</p>   
 
-    
       ### Beyazperde :
     - Beyazperde sitesinde tüm filmler {film-1,film-1352,film-35264...} şeklinde etiketlenmiş. Ayrıca yorumlar ve ratinglere html parser ile ulaşılabiliyor. Bu sayede çok daha efektif bir kodla yorumları çekebildim. Kısaca özetlemek gerekirse:
    
@@ -55,8 +58,8 @@
       - Vizyondaki son filme ait id'nin 330.000 civarında olduğunu düşünürsek bu da ciddi bir maliyet kaybının önlenmesi demek.
 
 
+    <p>&nbsp;</p> 
 
-    
     ### Denebunu :
     - Kullanıcı ratinglerini htmlde direkt olarak paylaşmak yerine yalnızca fotoğraf koymayı tercih etmişler. Ve ürünlerin url'leri ürün ismiyle kaydedilmiş. Dolayısıyla beyazperde sitesindeki kadar otomatik bir yöntem kullanamadım. Ancak özetlemek gerekirse algoritmam şu şekilde çalışıyor:
    
@@ -70,13 +73,22 @@
 
 
 
+<p>&nbsp;</p> 
+
+### Uygulamanın Geliştirilebilecek Yönleri :
+   - Analiz edilen ürün türüne göre daha spesifik sonuçlar verilebilir.
+   - Daha derinlemesine analiz yapabilen gelişmiş modellerden faydalanılabilir.
+   - Mevcut modelin eğitim sürecinde, hazır veri setlerinden yararlanarak doğruluk oranı artırılabilir.
 
 
+<p>&nbsp;</p>
 
-### KAYNAKLAR:
+### KAYNAKLAR :
     - Projeye ait daha fazla video için : https://drive.google.com/drive/folders/1GmojXNA15YhoXZ7ysJKeXapwkATJ0xSp?usp=sharing
     - Beyazperde yorumlarından oluşturulmuş veri seti için : https://drive.google.com/file/d/1GpHxgiCukb5Lki76eWk072YjRBoUpXlG/view?usp=sharing
     - Denebunu yorumlarından oluşturulmuş veri seti için : https://drive.google.com/file/d/1k_6Bu4yLYaphWyZCK6ERaXh96bwoBFLz/view?usp=sharing
+
+<p>&nbsp;</p> 
 
 ### SÜRÜMLER :
     - Python --> 3.9
