@@ -28,7 +28,7 @@ class CustomCuDNNGRU(Layer): # modelin .h5 olarak kaydedilmesi için özelleşti
         return config
 
 
-path = resources_folder + "merge.txt"
+path = resources_folder + "denebunu.txt"
 
 model_path = resources_folder+"model.h5"
 
