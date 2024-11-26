@@ -8,7 +8,7 @@ from PyQt5.QtGui import QIcon,QPixmap
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QCheckBox, QMessageBox, QLabel
 
 from src.show_rated_comments import ShowRatings
-from src.app_module import get_features, icon_folder, set_checkbox_icon, RoundButton, get_file_name, customize_widget, \
+from src.app_module import get_features, icon_folder, set_checkbox_icon, RoundButton, customize_widget, \
     cursor, conn
 from src.analysis import Analysis
 
@@ -95,7 +95,7 @@ class MainMenu(QWidget): # kullanıcının ilk karşılaştığı pencere
                     model = load_model()
                     if model:
                         data = model.get_binary_ratings()  # 0-1ler olarak cümleler analiz ediliyor.
-                        data = np.array(data)  # işlem kolaylığı için numpy array'e çevriliyor.
+                        data = np.array(data)
                         avr_rating = np.mean(data)  # ortalama rating bulunuyor.
                     else : return
 

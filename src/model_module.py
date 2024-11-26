@@ -57,14 +57,14 @@ target_test = np.array(target_test)
 numwords = 10000 # kelime haznesi - en çok kullanılan 10k kelimeyi al.
 tokenizer = Tokenizer(num_words=numwords) # 10bin kelimelik tokenizer oluştur.
 
-tokenizer.fit_on_texts(data) # en sık geçen kelimelere sayılar atanır. çok : 1, bilgisayar : 7000 gibi.
+tokenizer.fit_on_texts(data)
 
-data_train_tokens = tokenizer.texts_to_sequences(data_train) # data-train tokenizasyonu (tüm dataya göre)
-data_test_tokens = tokenizer.texts_to_sequences(data_test) # data-test tokenizasyonu (tüm dataya göre)
+data_train_tokens = tokenizer.texts_to_sequences(data_train)
+data_test_tokens = tokenizer.texts_to_sequences(data_test)
 
 # tüm yorumların uzunluğunu tutan dizi
 num_tokens = [len(tokens) for tokens in (data_test_tokens+data_train_tokens)]
-num_tokens = np.array(num_tokens) # daha kolay işlem yapabilmek için numpy array'e dönüştürüyoruz.
+num_tokens = np.array(num_tokens)
 
 max_data_size = np.max(num_tokens) # en uzun yorum
 

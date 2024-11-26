@@ -1,10 +1,8 @@
 import os
-import sys
 
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QIcon, QPixmap
-from PyQt5.QtWidgets import QLabel, QVBoxLayout, QHBoxLayout, QDialog, QProgressBar, QMessageBox, QPushButton, \
-    QApplication
+from PyQt5.QtWidgets import QLabel, QVBoxLayout, QHBoxLayout, QDialog, QProgressBar, QMessageBox, QPushButton
 
 from src.app_module import get_features, icon_folder, customize_widget, cursor, conn, get_file_name
 
@@ -13,12 +11,11 @@ from src.app_module import get_features, icon_folder, customize_widget, cursor, 
 
 class Analysis(QDialog): # Yüzde olarak memnuniyet oranını gösteren sınıf
 
-    def __init__(self,rating,path,is_exists): # rating ve dosya ismi parametre olarak alınıyor.
+    def __init__(self,rating,path,is_exists): # rating,dosya ismi ve daha önce kaydedlilip kaydedilmediği
+                                              # bilgisi parametre olarak alınıyor.
         super().__init__()
         self.save_score(path,rating,is_exists)
         self.setWindowFlags(self.windowFlags() & ~Qt.WindowContextHelpButtonHint) # soru işareti gizleniyor.
-
-        print(rating,path,is_exists)
 
         self.path = path
         self.file_name = get_file_name(path) # pencere ismi için dosya adı kullanılıyor.
@@ -28,7 +25,7 @@ class Analysis(QDialog): # Yüzde olarak memnuniyet oranını gösteren sınıf
         self.init_ui()
 
     def save_score(self,path,rating,is_exists):
-        if not is_exists:
+        if not is_exists: # kayıt yoksa
             cursor.execute("INSERT INTO Analysis VALUES (?,?)",(path,rating))
             conn.commit()
 
@@ -47,10 +44,8 @@ class Analysis(QDialog): # Yüzde olarak memnuniyet oranını gösteren sınıf
 
         msgBox.exec_()
 
-        if msgBox.clickedButton() == yes_button:
-            print(self.path)
+        if msgBox.clickedButton() == yes_button: # tüm verileri temizleme işlemi
             rated_path = self.path[ : -4] + "_rated.csv"
-            print(rated_path)
             cursor.execute("DELETE FROM CurrentPages WHERE path=?", (rated_path,))
             conn.commit()
 

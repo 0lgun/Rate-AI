@@ -1,6 +1,6 @@
 from functools import partial
 
-from PyQt5.QtGui import QPixmap, QIcon
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QVBoxLayout, QLabel, QDialog, QHBoxLayout, QProgressBar
 from PyQt5.QtCore import QThread, pyqtSignal, Qt, QTimer
 
@@ -25,7 +25,7 @@ class LoadingDialog(QDialog): # yükleniyor penceresi
         self.success = False # yükleme tamamlandı mı?
         self.setWindowFlags(self.windowFlags() & ~Qt.WindowContextHelpButtonHint)
 
-        self.num_dark = 1
+        self.num_point = 1
 
         self.color = "#2F2F2F" # koyu gri
 
@@ -43,8 +43,8 @@ class LoadingDialog(QDialog): # yükleniyor penceresi
         x,y = 500,333
         self.setWindowTitle('Model Yükleme')
         
-        self.label = QLabel("Yükleniyor {}".format(self.num_dark*"."), self)
-        customize_widget(widget=self.label,color="white")
+        self.label = QLabel(self)
+        customize_widget(widget=self.label,color="white",text=f"Yükleniyor {self.num_point*'.'}")
 
         self.progress_label = QLabel(self)
         customize_widget(widget=self.progress_label,color="white",text=f"%0")
@@ -76,7 +76,7 @@ class LoadingDialog(QDialog): # yükleniyor penceresi
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(partial(self.update_progress_bar, self.success))
-        self.timer.start(500)  # 1000 ms = 1 saniye
+        self.timer.start(500)
 
         self.start_loading(self.path)
 
@@ -99,15 +99,13 @@ class LoadingDialog(QDialog): # yükleniyor penceresi
         self.timer.stop()
         self.progress_label.setText("%100")
         self.progress_bar.setValue(self.estimatedCompletionTime)
-        QTimer.singleShot(1000,self.close)
+        QTimer.singleShot(1000,self.close) # 1 sn başarılı ekranını göster.
         self.success = True
 
     def update_progress_bar(self,success):
         try:
             if not success:
-                self.label.setText("Yükleniyor {}".format(self.num_dark * "."))
-
-                self.num_dark += 1
+                self.label.setText("Yükleniyor {}".format(self.num_point * "."))
 
                 if self.value == self.estimatedCompletionTime:
                     self.value = int(self.estimatedCompletionTime * .99)
@@ -120,13 +118,15 @@ class LoadingDialog(QDialog): # yükleniyor penceresi
                 if rate == int(rate):
                     rate = int(rate)
 
-                if rate >= 99:
+                if rate >= 99: # tahmini  süreyi geçmesi durumunda bar 99da kalsın.
                     rate = 99
 
                 self.progress_label.setText(f"%{rate}")
 
-                if self.num_dark == 4:
-                    self.num_dark = 1
+                self.num_point += 1
+
+                if self.num_point == 4: # . / .. / ... döngüsü
+                    self.num_point = 1
 
                 self.value += 500
 

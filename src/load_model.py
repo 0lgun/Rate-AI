@@ -71,7 +71,7 @@ class LoadModel:  # modeli yükleyen sınıf
 
         return comment_list  # yorumları döndür.
 
-    def interpret_comment(self, comment):
+    def interpret_comment(self, comment): # yorumla
         tokens = tokenizer.texts_to_sequences([comment])
         tokens_pad = pad_sequences(tokens, maxlen=max_tokens)
 

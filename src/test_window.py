@@ -1,11 +1,10 @@
-import sys
 from functools import partial
 
 from PyQt5.QtCore import QSize, QTimer, Qt, QObject
 from PyQt5.QtGui import QIcon, QPixmap, QTextCursor
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QTextEdit, QLabel, QApplication, QMessageBox, QPushButton, QHBoxLayout
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QTextEdit, QLabel, QMessageBox, QPushButton, QHBoxLayout
 
-from src.app_module import get_features, icon_folder, RoundButton, customize_widget
+from src.app_module import icon_folder, customize_widget
 
 class Enter(QObject): # enter tuşunun özelleştirilmesini sağlayan sınıf
     def __init__(self,label = None, area = None, func = None):
